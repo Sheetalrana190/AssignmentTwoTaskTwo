@@ -8,7 +8,14 @@ the information is displayed back to the electrician.
 */
 namespace AssignmentTwoTaskTwo
 {
-        class Program
+    // Interface to declare the functionality of the base class
+    public interface ICustomer
+    {
+        void DisplaySummary();
+        void PerformTask();
+    }
+
+    class Program
         {
             static void Main(string[] args)
             {
