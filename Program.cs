@@ -34,12 +34,10 @@ namespace AssignmentTwoTaskTwo
         public int Bulbs;
         public int Outlets;
         public string CreditCard;
-
         public void DisplaySummary()
         {
             Console.WriteLine($"{Name}, {CreditCard.Substring(0, 4)} XXXX XXXX {CreditCard.Substring(12)}");
         }
-
         // Overloaded method to display detailed summary
         public void DisplaySummary(bool detailed)
         {
@@ -55,14 +53,11 @@ namespace AssignmentTwoTaskTwo
                 DisplaySummary();
             }
         }
-
         public abstract void PerformTask(); // Declaring supplementary task as an abstract method
-
         public string GetCustomerInfo()
         {
             return $"Customer name: {Name} ; Building type: {BuildingType} ; Size: {BuildingSize} sqft ; {Bulbs} bulbs ; {Outlets} outlets ; Credit card No.: {CreditCard.Substring(0, 4)} XXXX XXXX {CreditCard.Substring(12)} ; Special Task: {GetTaskDescription()} ; Common tasks: Create wiring schemas and Purchase necessary parts for a job";
         }
-
         protected abstract string GetTaskDescription();
     }
 
@@ -183,8 +178,31 @@ namespace AssignmentTwoTaskTwo
             {
                 Console.Write("Enter Customer Name: ");
                 string name = Console.ReadLine();
-                if (!string.IsNullOrEmpty(name)) return name;
-                Console.WriteLine("Name cannot be empty. Please enter a valid name.");
+
+                if (string.IsNullOrEmpty(name))
+                {
+                    Console.WriteLine("Name cannot be empty. Please enter a valid name.");
+                    continue;
+                }
+
+                bool isValid = true;
+                foreach (char c in name)
+                {
+                    if (!char.IsLetter(c))
+                    {
+                        isValid = false;
+                        break;
+                    }
+                }
+
+                if (isValid)
+                {
+                    return name;
+                }
+                else
+                {
+                    Console.WriteLine("Name should contain alphabets only. Please enter a valid name.");
+                }
             }
         }
 
