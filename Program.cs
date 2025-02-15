@@ -58,17 +58,6 @@ namespace AssignmentTwoTaskTwo
 
         public abstract void PerformTask(); // Declaring supplementary task as an abstract method
 
-       // Common tasks for all customers
-        public void CreateWiringSchemas()
-        {
-            Console.WriteLine("Creating wiring schemas.");
-        }
-
-        public void PurchaseNecessaryParts()
-        {
-            Console.WriteLine("Purchasing necessary parts for the job.");
-        }
-
         public string GetCustomerInfo()
         {
             return $"Customer name: {Name} ; Building type: {BuildingType} ; Size: {BuildingSize} sqft ; {Bulbs} bulbs ; {Outlets} outlets ; Credit card No.: {CreditCard.Substring(0, 4)} XXXX XXXX {CreditCard.Substring(12)} ; Special Task: {GetTaskDescription()} ; Common tasks: Create wiring schemas and Purchase necessary parts for a job";
