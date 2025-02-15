@@ -9,7 +9,7 @@ methods and properties.
 method).
 3. Derive all classes from this abstract class, implementing, overloading and overriding
 methods as needed. Remember that abstract methods are virtual.
-
+4. Implement list structure to collect data of all customer 
 *
 */
 using System;
@@ -22,7 +22,7 @@ namespace AssignmentTwoTaskTwo
         void DisplaySummary();
         void DisplaySummary(bool detailed); // Overloaded method
         void PerformTask();
-        void PerformTask(string specificTask); // Overloaded method
+       
     }
 
     // Abstract base class implementing the interface
@@ -58,10 +58,7 @@ namespace AssignmentTwoTaskTwo
 
         public abstract void PerformTask(); // Declaring supplementary task as an abstract method
 
-        // Overloaded method to perform specific tasks
-        public abstract void PerformTask(string specificTask);
-
-        // Common tasks for all customers
+       // Common tasks for all customers
         public void CreateWiringSchemas()
         {
             Console.WriteLine("Creating wiring schemas.");
@@ -74,7 +71,7 @@ namespace AssignmentTwoTaskTwo
 
         public string GetCustomerInfo()
         {
-            return $"Customer name: {Name}, Building type: {BuildingType}, Size: {BuildingSize} sqft, {Bulbs} bulbs, {Outlets} outlets, Credit card No.: {CreditCard.Substring(0, 4)} XXXX XXXX {CreditCard.Substring(12)}, Special Task: {GetTaskDescription()}, Common tasks: Create wiring schemas and Purchase necessary parts for a job";
+            return $"Customer name: {Name} ; Building type: {BuildingType} ; Size: {BuildingSize} sqft ; {Bulbs} bulbs ; {Outlets} outlets ; Credit card No.: {CreditCard.Substring(0, 4)} XXXX XXXX {CreditCard.Substring(12)} ; Special Task: {GetTaskDescription()} ; Common tasks: Create wiring schemas and Purchase necessary parts for a job";
         }
 
         protected abstract string GetTaskDescription();
@@ -87,12 +84,6 @@ namespace AssignmentTwoTaskTwo
         {
             Console.WriteLine("Installing fire alarms.");
         }
-
-        public override void PerformTask(string specificTask)
-        {
-            Console.WriteLine($"Performing specific task: {specificTask} for the house.");
-        }
-
         protected override string GetTaskDescription()
         {
             return "Installing fire alarms.";
@@ -106,12 +97,6 @@ namespace AssignmentTwoTaskTwo
         {
             Console.WriteLine("Wiring milking equipment.");
         }
-
-        public override void PerformTask(string specificTask)
-        {
-            Console.WriteLine($"Performing specific task: {specificTask} for the barn.");
-        }
-
         protected override string GetTaskDescription()
         {
             return "Wiring milking equipment.";
@@ -125,12 +110,6 @@ namespace AssignmentTwoTaskTwo
         {
             Console.WriteLine("Installing automatic doors.");
         }
-
-        public override void PerformTask(string specificTask)
-        {
-            Console.WriteLine($"Performing specific task: {specificTask} for the garage.");
-        }
-
         protected override string GetTaskDescription()
         {
             return "Installing automatic doors.";
@@ -170,7 +149,7 @@ namespace AssignmentTwoTaskTwo
             Console.WriteLine("\n--- Customer List ---");
             foreach (var customer in customers)
             {
-                Console.WriteLine(customer.GetCustomerInfo());
+                Console.WriteLine(customer.GetCustomerInfo()+"\n\n");
             }
         }
 
