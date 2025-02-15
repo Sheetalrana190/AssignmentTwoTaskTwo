@@ -20,8 +20,11 @@ namespace AssignmentTwoTaskTwo
     public interface ICustomer
     {
         void DisplaySummary();
+        void DisplaySummary(bool detailed); // Overloaded method
         void PerformTask();
+        void PerformTask(string specificTask); // Overloaded method
     }
+
     // Abstract base class implementing the interface
     public abstract class Customer : ICustomer
     {
@@ -34,16 +37,47 @@ namespace AssignmentTwoTaskTwo
 
         public void DisplaySummary()
         {
-            Console.WriteLine("\n--- Customer Summary ---");
-            Console.WriteLine($"Name: {Name}");
-            Console.WriteLine($"Building Type: {BuildingType}");
-            Console.WriteLine($"Building Size: {BuildingSize} sqft");
-            Console.WriteLine($"Bulbs: {Bulbs}");
-            Console.WriteLine($"Outlets: {Outlets}");
-            Console.WriteLine($"Credit Card: {CreditCard.Substring(0, 4)} XXXX XXXX {CreditCard.Substring(12)}");
+            Console.WriteLine($"{Name}, {CreditCard.Substring(0, 4)} XXXX XXXX {CreditCard.Substring(12)}");
+        }
+
+        // Overloaded method to display detailed summary
+        public void DisplaySummary(bool detailed)
+        {
+            if (detailed)
+            {
+                Console.WriteLine($"Building Type: {BuildingType}");
+                Console.WriteLine($"Building Size: {BuildingSize} sqft");
+                Console.WriteLine($"Bulbs: {Bulbs}");
+                Console.WriteLine($"Outlets: {Outlets}");
+            }
+            else
+            {
+                DisplaySummary();
+            }
         }
 
         public abstract void PerformTask(); // Declaring supplementary task as an abstract method
+
+        // Overloaded method to perform specific tasks
+        public abstract void PerformTask(string specificTask);
+
+        // Common tasks for all customers
+        public void CreateWiringSchemas()
+        {
+            Console.WriteLine("Creating wiring schemas.");
+        }
+
+        public void PurchaseNecessaryParts()
+        {
+            Console.WriteLine("Purchasing necessary parts for the job.");
+        }
+
+        public string GetCustomerInfo()
+        {
+            return $"Customer name: {Name}, Building type: {BuildingType}, Size: {BuildingSize} sqft, {Bulbs} bulbs, {Outlets} outlets, Credit card No.: {CreditCard.Substring(0, 4)} XXXX XXXX {CreditCard.Substring(12)}, Special Task: {GetTaskDescription()}, Common tasks: Create wiring schemas and Purchase necessary parts for a job";
+        }
+
+        protected abstract string GetTaskDescription();
     }
 
     // Derived class for HouseCustomer
@@ -52,6 +86,16 @@ namespace AssignmentTwoTaskTwo
         public override void PerformTask()
         {
             Console.WriteLine("Installing fire alarms.");
+        }
+
+        public override void PerformTask(string specificTask)
+        {
+            Console.WriteLine($"Performing specific task: {specificTask} for the house.");
+        }
+
+        protected override string GetTaskDescription()
+        {
+            return "Installing fire alarms.";
         }
     }
 
@@ -62,6 +106,16 @@ namespace AssignmentTwoTaskTwo
         {
             Console.WriteLine("Wiring milking equipment.");
         }
+
+        public override void PerformTask(string specificTask)
+        {
+            Console.WriteLine($"Performing specific task: {specificTask} for the barn.");
+        }
+
+        protected override string GetTaskDescription()
+        {
+            return "Wiring milking equipment.";
+        }
     }
 
     // Derived class for GarageCustomer
@@ -71,19 +125,31 @@ namespace AssignmentTwoTaskTwo
         {
             Console.WriteLine("Installing automatic doors.");
         }
+
+        public override void PerformTask(string specificTask)
+        {
+            Console.WriteLine($"Performing specific task: {specificTask} for the garage.");
+        }
+
+        protected override string GetTaskDescription()
+        {
+            return "Installing automatic doors.";
+        }
     }
+
     class Program
     {
         static void Main(string[] args)
         {
+            List<Customer> customers = new List<Customer>();
+
             // Asking user for customer details and processing
             while (true)
             {
                 try
                 {
                     Customer customer = GetCustomerDetails();
-                    customer.DisplaySummary();
-                    customer.PerformTask();
+                    customers.Add(customer);
 
                     // Ask if the user wants to continue
                     Console.Write("Do you want to enter another customer? (yes/no): ");
@@ -99,7 +165,15 @@ namespace AssignmentTwoTaskTwo
                     Console.WriteLine($"An error occurred: {ex.Message}");
                 }
             }
+
+            // Display all customer information at the end
+            Console.WriteLine("\n--- Customer List ---");
+            foreach (var customer in customers)
+            {
+                Console.WriteLine(customer.GetCustomerInfo());
+            }
         }
+
         static Customer GetCustomerDetails()
         {
             string name = GetCustomerName();
@@ -220,7 +294,6 @@ namespace AssignmentTwoTaskTwo
                 if (creditCard.Length == 16 && long.TryParse(creditCard, out _)) return creditCard;
                 Console.WriteLine("Invalid credit card. Enter exactly 16 digits.");
             }
-
         }
     }
 }
